@@ -1,0 +1,61 @@
+<html>
+    <script>
+        var rand_num1 = Math.floor(1000 + Math.random() * 9000);
+        console.log("da", rand_num1);
+        var urlString = window.location.href;
+        let paramString = urlString.split('?')[1];
+        
+        let queryString = new URLSearchParams(paramString);
+        for(let pair of queryString.entries()) {
+            console.log("Key is:" + pair[0]);
+            console.log("Value is:" + pair[1]);
+        }
+
+        function getParameterByName(name, url = window.location.href) {
+        name = name.replace(/[\[\]]/g, '\\$&');
+        var regex = new RegExp('[?&]' + name + '(=([^&#]*)|&|#|$)'),
+            results = regex.exec(url);
+        if (!results) return null;
+        if (!results[2]) return '';
+        return decodeURIComponent(results[2].replace(/\+/g, ' '));
+
+    }
+
+    function submit() {
+        var otpentered =  document.getElementById("otp").value;
+        if (otpentered == rand_num1) {
+            document.getElementById("validate").innerHTML="Validation Successful!"
+            window.location.href = "http://pixel6.co/";
+        }
+        else {
+
+            document.getElementById("validate").innerHTML="Invalid OTP! Please Enter Again";
+            window.location.href = "http://pixel6.co/client/not-found";
+        }
+    }
+
+    function myFunction() {
+        var firstName = getParameterByName('firstName');
+        var email = getParameterByName('email');
+        document.getElementById("firstname").innerHTML = firstName;
+        document.getElementById("email").innerHTML = email;
+        console.log("daasd", document.getElementById("firstname"));
+    }
+        // document.getElementById("firstname").innerHTML = firstName;
+        // document.getElementById("email").innerHTML = email;
+    </script>
+    <body onload="myFunction();">
+        <div class="row">
+            Dear,<p id="firstname"></p>
+        </div>
+        Thank you for your inquiry. A 4 digit verification number has been sent to your email: <p id="email"></p>,
+        please enter it in the following box and submit for confirmation:
+        <br /><br /><br />
+        <label for="otp">Enter OTP</label>
+        <input type="number" id="otp" name="otp" placeholder="">
+
+        <br /><br /><br />
+        <p id="validate"></p>
+        <input type="button" id="submit" name="submit" value="Submit" onclick="submit();">
+    </body>
+</html>

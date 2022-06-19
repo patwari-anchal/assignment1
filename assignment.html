@@ -1,0 +1,148 @@
+<html>
+<style>
+input[type=text], select {
+  width: 100%;
+  padding: 12px 20px;
+  margin: 8px 0;
+  display: inline-block;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+input[type=email], select {
+  width: 100%;
+  padding: 12px 20px;
+  margin: 8px 0;
+  display: inline-block;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+
+input[type=number], select {
+  width: 50%;
+  padding: 12px 20px;
+  margin: 8px 0;
+  display: inline-block;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+
+input[type=submit] {
+  width: 100%;
+  background-color: #4CAF50;
+  color: white;
+  padding: 14px 20px;
+  margin: 8px 0;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+input[type=button] {
+  width: 25%;
+  background-color: #4CAF50;
+  color: white;
+  padding: 14px 20px;
+  margin: 8px 0;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+input[type=submit]:hover {
+  background-color: #45a049;
+}
+
+div {
+  border-radius: 5px;
+  background-color: #f2f2f2;
+  padding: 20px;
+}
+</style>
+
+<body onload="randomNums();">
+
+<h3>Loan Application</h3>
+
+<div>
+    <label for="fname">Full Name</label>
+    <input type="text" id="fname" name="firstname" placeholder="Your Full Name">
+
+    <label for="email">Email</label>
+    <input type="email" id="email" name="email" placeholder="Your email..">
+
+    <label for="pan">Pan</label>
+    <input type="text" id="pan" name="pan" placeholder="Your pan..">
+
+    <label for="lamount">Loan Amount</label>
+    <br />
+    <input type="number" id="lamount" name="lamount" placeholder="Your loan amount.." onchange="loadWords();">
+    <div id="result"></div>
+
+    <strong>Add these numbers</strong>
+
+    <div id="digit1"></div>
+
+    <div id="digit2"></div>
+
+    <input type="text" id="answer" placeholder="Enter the captcha value here"/>
+
+    <input type="button" value="New captcha" onclick="randomNums();" />
+
+    <div id="status"></div>
+
+    <input type="submit" value="submit" onclick="submit()">
+    <!-- <a onclick="submit();" href="./thankyou.html?firstName=">Submit</a> -->
+</div>
+
+</body>
+
+<script>
+    function loadWords() {
+let numberInput = document.getElementById('lamount').value ;
+    let myDiv = document.querySelector('#result');
+
+    let oneToTwenty = ['','one ','two ','three ','four ', 'five ','six ','seven ','eight ','nine ','ten ',
+    'eleven ','twelve ','thirteen ','fourteen ','fifteen ','sixteen ','seventeen ','eighteen ','nineteen '];
+    let tenth = ['', '', 'twenty','thirty','forty','fifty', 'sixty','seventy','eighty','ninety'];
+
+    if(numberInput.toString().length > 9) return myDiv.innerHTML = 'overlimit' ;
+    console.log(numberInput);
+    //let num = ('0000000000'+ numberInput).slice(-10).match(/^(\d{1})(\d{2})(\d{2})(\d{2})(\d{1})(\d{2})$/);
+  let num = ('0000000'+ numberInput).slice(-7).match(/^(\d{1})(\d{1})(\d{2})(\d{1})(\d{2})$/);
+    console.log(num);
+    if(!num) return;
+
+    let outputText = num[1] != 0 ? (oneToTwenty[Number(num[1])] || `${tenth[num[1][0]]} ${oneToTwenty[num[1][1]]}` )+' million ' : ''; 
+  
+    outputText +=num[2] != 0 ? (oneToTwenty[Number(num[2])] || `${tenth[num[2][0]]} ${oneToTwenty[num[2][1]]}` )+'hundred ' : ''; 
+    outputText +=num[3] != 0 ? (oneToTwenty[Number(num[3])] || `${tenth[num[3][0]]} ${oneToTwenty[num[3][1]]}`)+' thousand ' : ''; 
+    outputText +=num[4] != 0 ? (oneToTwenty[Number(num[4])] || `${tenth[num[4][0]]} ${oneToTwenty[num[4][1]]}`) +'hundred ': ''; 
+    outputText +=num[5] != 0 ? (oneToTwenty[Number(num[5])] || `${tenth[num[5][0]]} ${oneToTwenty[num[5][1]]} `) : ''; 
+    console.log("sdfdsf", outputText);
+
+    myDiv.innerHTML = outputText;
+}
+
+function randomNums(){
+
+var rand_num1 = Math.floor(Math.random() * 10) + 1;
+
+var rand_num2 = Math.floor(Math.random() * 10) + 1;
+
+document.getElementById("digit1").innerHTML = rand_num1;
+
+document.getElementById("digit2").innerHTML = rand_num2;
+
+}
+
+function submit() {
+    var fname = document.getElementById('fname').value;
+    var email = document.getElementById('email').value;
+    window.location.href = "./thankyou.html?firstName="+fname+"&email="+email;
+    console.log("First Name", param1)
+}
+</script>
+</html>
